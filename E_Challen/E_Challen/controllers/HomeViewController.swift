@@ -41,8 +41,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     }
     
     func fetchData() {
-        vehicles = manager.fetchUsers()
-        self.tableView.reloadData()
+        vehicles = manager.fetchUsers().sorted(by: { $0.createdAt > $1.createdAt })
+          self.tableView.reloadData()
     }
     
     static func getInstance() -> HomeViewController {

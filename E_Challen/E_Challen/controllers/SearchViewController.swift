@@ -28,7 +28,9 @@ class SearchViewController: UIViewController {
     }
     
     func fetchData() {
-        histories = manager.fetchHistory()
+        histories = manager.fetchHistory().sorted(by: { $0.createdAt > $1.createdAt })
+          self.tableView.reloadData()
+     //   histories = manager.fetchHistory()
     }
     
     static func getInstance() -> SearchViewController {

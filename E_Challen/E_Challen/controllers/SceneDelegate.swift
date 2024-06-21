@@ -55,15 +55,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func navigateToHomeVC() {
         let isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
         
-        if isFirstLaunch {
-            // Show HomeViewController
-            let homeViewController = HomeViewController.getInstance()
-            let navigationController = UINavigationController(rootViewController: homeViewController)
-            self.window?.rootViewController = navigationController
-            self.window?.isUserInteractionEnabled = true
-            self.window?.backgroundColor = .white
-            self.window?.makeKeyAndVisible()
-        } else {
+//        if isFirstLaunch {
+//            // Show HomeViewController
+//            let homeViewController = HomeViewController.getInstance()
+//            let navigationController = UINavigationController(rootViewController: homeViewController)
+//            self.window?.rootViewController = navigationController
+//            self.window?.isUserInteractionEnabled = true
+//            self.window?.backgroundColor = .white
+//            self.window?.makeKeyAndVisible()
+//        } else {
             // Show CartoonViewController
             let cartoonViewController = SplashViewController.getInstance()
             let navigationController = UINavigationController(rootViewController: cartoonViewController)
@@ -73,8 +73,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window?.makeKeyAndVisible()
             
             // Set the flag to indicate that the app has been launched before
-            UserDefaults.standard.set(true, forKey: "isFirstLaunch")
-        }
+//            UserDefaults.standard.set(true, forKey: "isFirstLaunch")
+//        }
     }
     
 }

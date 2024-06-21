@@ -12,6 +12,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var vehicleNumber: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
+    var deleteCallBack:(() -> ())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,5 +26,6 @@ class HomeTableViewCell: UITableViewCell {
     }
 
     @IBAction func deleteButtontapped(_ sender: Any) {
+        self.deleteCallBack?()
     }
 }

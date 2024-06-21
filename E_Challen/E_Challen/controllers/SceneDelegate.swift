@@ -16,6 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        self.navigateToHomeVC()
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
@@ -51,5 +52,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
+    func navigateToHomeVC() {
+        let isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
+        
+        if isFirstLaunch {
+            // Show HomeViewController
+            let homeViewController = HomeViewController.getInstance()
+            let navigationController = UINavigationController(rootViewController: homeViewController)
+            self.window?.rootViewController = navigationController
+            self.window?.isUserInteractionEnabled = true
+            self.window?.backgroundColor = .white
+            self.window?.makeKeyAndVisible()
+        } else {
+            // Show CartoonViewController
+            let cartoonViewController = SplashViewController.getInstance()
+            let navigationController = UINavigationController(rootViewController: cartoonViewController)
+            self.window?.rootViewController = navigationController
+            self.window?.isUserInteractionEnabled = true
+            self.window?.backgroundColor = .white
+            self.window?.makeKeyAndVisible()
+            
+            // Set the flag to indicate that the app has been launched before
+            UserDefaults.standard.set(true, forKey: "isFirstLaunch")
+        }
+    }
+    
 }
 

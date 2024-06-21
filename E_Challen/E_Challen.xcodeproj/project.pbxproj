@@ -14,6 +14,31 @@
 		B259CEFC2C255B8100505333 /* E_Challen.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B259CEFA2C255B8100505333 /* E_Challen.xcdatamodeld */; };
 		B259CEFE2C255B8200505333 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B259CEFD2C255B8200505333 /* Assets.xcassets */; };
 		B259CF012C255B8200505333 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B259CF002C255B8200505333 /* Base */; };
+		B259CF192C255C7000505333 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF082C255C7000505333 /* Alert.swift */; };
+		B259CF1A2C255C7000505333 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF092C255C7000505333 /* BlurView.swift */; };
+		B259CF1B2C255C7000505333 /* CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0A2C255C7000505333 /* CGPath.swift */; };
+		B259CF1C2C255C7000505333 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0B2C255C7000505333 /* Date.swift */; };
+		B259CF1D2C255C7000505333 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0C2C255C7000505333 /* DateHelper.swift */; };
+		B259CF1E2C255C7000505333 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0D2C255C7000505333 /* Double.swift */; };
+		B259CF1F2C255C7000505333 /* DPTagTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0E2C255C7000505333 /* DPTagTextView.swift */; };
+		B259CF202C255C7000505333 /* Rechability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF0F2C255C7000505333 /* Rechability.swift */; };
+		B259CF212C255C7000505333 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF102C255C7000505333 /* String.swift */; };
+		B259CF222C255C7000505333 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF112C255C7000505333 /* TextField.swift */; };
+		B259CF232C255C7000505333 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF122C255C7000505333 /* UIColor.swift */; };
+		B259CF242C255C7000505333 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF132C255C7000505333 /* UIImage.swift */; };
+		B259CF252C255C7000505333 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF142C255C7000505333 /* UIImageView.swift */; };
+		B259CF262C255C7000505333 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF152C255C7000505333 /* UIView.swift */; };
+		B259CF272C255C7000505333 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF162C255C7000505333 /* UIViewController.swift */; };
+		B259CF282C255C7000505333 /* UiViewDashLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B259CF172C255C7000505333 /* UiViewDashLine.swift */; };
+		B259CF2D2C255E3400505333 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B259CF292C255E3400505333 /* Montserrat-Bold.ttf */; };
+		B259CF2E2C255E3400505333 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B259CF2A2C255E3400505333 /* Montserrat-Regular.ttf */; };
+		B259CF2F2C255E3400505333 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = B259CF2B2C255E3400505333 /* OFL.txt */; };
+		B29E10C52C256C2E007E7F52 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C42C256C2E007E7F52 /* SplashViewController.swift */; };
+		B29E10C72C256C3F007E7F52 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C62C256C3F007E7F52 /* HomeViewController.swift */; };
+		B29E10C92C256C47007E7F52 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C82C256C47007E7F52 /* SearchViewController.swift */; };
+		B29E10CB2C256C7E007E7F52 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10CA2C256C7E007E7F52 /* HomeTableViewCell.swift */; };
+		B29E10CD2C256C8A007E7F52 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10CC2C256C8A007E7F52 /* SearchTableViewCell.swift */; };
+		B29E10D02C256E32007E7F52 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10CF2C256E32007E7F52 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +51,31 @@
 		B259CEFD2C255B8200505333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B259CF002C255B8200505333 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B259CF022C255B8200505333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B259CF082C255C7000505333 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		B259CF092C255C7000505333 /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		B259CF0A2C255C7000505333 /* CGPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPath.swift; sourceTree = "<group>"; };
+		B259CF0B2C255C7000505333 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		B259CF0C2C255C7000505333 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		B259CF0D2C255C7000505333 /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		B259CF0E2C255C7000505333 /* DPTagTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPTagTextView.swift; sourceTree = "<group>"; };
+		B259CF0F2C255C7000505333 /* Rechability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rechability.swift; sourceTree = "<group>"; };
+		B259CF102C255C7000505333 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		B259CF112C255C7000505333 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		B259CF122C255C7000505333 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		B259CF132C255C7000505333 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		B259CF142C255C7000505333 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		B259CF152C255C7000505333 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		B259CF162C255C7000505333 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		B259CF172C255C7000505333 /* UiViewDashLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiViewDashLine.swift; sourceTree = "<group>"; };
+		B259CF292C255E3400505333 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		B259CF2A2C255E3400505333 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		B259CF2B2C255E3400505333 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		B29E10C42C256C2E007E7F52 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		B29E10C62C256C3F007E7F52 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B29E10C82C256C47007E7F52 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		B29E10CA2C256C7E007E7F52 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		B29E10CC2C256C8A007E7F52 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		B29E10CF2C256E32007E7F52 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +108,10 @@
 		B259CEF02C255B8100505333 /* E_Challen */ = {
 			isa = PBXGroup;
 			children = (
-				B259CEF12C255B8100505333 /* AppDelegate.swift */,
-				B259CEF32C255B8100505333 /* SceneDelegate.swift */,
-				B259CEF52C255B8100505333 /* ViewController.swift */,
+				B29E10CE2C256E23007E7F52 /* Model */,
+				B29E10C32C256C13007E7F52 /* controllers */,
+				B259CF2C2C255E3400505333 /* montserrat */,
+				B259CF182C255C7000505333 /* Extension */,
 				B259CEF72C255B8100505333 /* Main.storyboard */,
 				B259CEFD2C255B8200505333 /* Assets.xcassets */,
 				B259CEFF2C255B8200505333 /* LaunchScreen.storyboard */,
@@ -68,6 +119,62 @@
 				B259CEFA2C255B8100505333 /* E_Challen.xcdatamodeld */,
 			);
 			path = E_Challen;
+			sourceTree = "<group>";
+		};
+		B259CF182C255C7000505333 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B259CF082C255C7000505333 /* Alert.swift */,
+				B259CF092C255C7000505333 /* BlurView.swift */,
+				B259CF0A2C255C7000505333 /* CGPath.swift */,
+				B259CF0B2C255C7000505333 /* Date.swift */,
+				B259CF0C2C255C7000505333 /* DateHelper.swift */,
+				B259CF0D2C255C7000505333 /* Double.swift */,
+				B259CF0E2C255C7000505333 /* DPTagTextView.swift */,
+				B259CF0F2C255C7000505333 /* Rechability.swift */,
+				B259CF102C255C7000505333 /* String.swift */,
+				B259CF112C255C7000505333 /* TextField.swift */,
+				B259CF122C255C7000505333 /* UIColor.swift */,
+				B259CF132C255C7000505333 /* UIImage.swift */,
+				B259CF142C255C7000505333 /* UIImageView.swift */,
+				B259CF152C255C7000505333 /* UIView.swift */,
+				B259CF162C255C7000505333 /* UIViewController.swift */,
+				B259CF172C255C7000505333 /* UiViewDashLine.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		B259CF2C2C255E3400505333 /* montserrat */ = {
+			isa = PBXGroup;
+			children = (
+				B259CF292C255E3400505333 /* Montserrat-Bold.ttf */,
+				B259CF2A2C255E3400505333 /* Montserrat-Regular.ttf */,
+				B259CF2B2C255E3400505333 /* OFL.txt */,
+			);
+			path = montserrat;
+			sourceTree = "<group>";
+		};
+		B29E10C32C256C13007E7F52 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B259CEF32C255B8100505333 /* SceneDelegate.swift */,
+				B259CEF12C255B8100505333 /* AppDelegate.swift */,
+				B259CEF52C255B8100505333 /* ViewController.swift */,
+				B29E10C42C256C2E007E7F52 /* SplashViewController.swift */,
+				B29E10C62C256C3F007E7F52 /* HomeViewController.swift */,
+				B29E10C82C256C47007E7F52 /* SearchViewController.swift */,
+				B29E10CA2C256C7E007E7F52 /* HomeTableViewCell.swift */,
+				B29E10CC2C256C8A007E7F52 /* SearchTableViewCell.swift */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		B29E10CE2C256E23007E7F52 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B29E10CF2C256E32007E7F52 /* Constants.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,8 +235,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B259CF2F2C255E3400505333 /* OFL.txt in Resources */,
+				B259CF2D2C255E3400505333 /* Montserrat-Bold.ttf in Resources */,
 				B259CEFE2C255B8200505333 /* Assets.xcassets in Resources */,
 				B259CF012C255B8200505333 /* Base in Resources */,
+				B259CF2E2C255E3400505333 /* Montserrat-Regular.ttf in Resources */,
 				B259CEF92C255B8100505333 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,10 +251,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B259CF282C255C7000505333 /* UiViewDashLine.swift in Sources */,
+				B259CF202C255C7000505333 /* Rechability.swift in Sources */,
+				B259CF212C255C7000505333 /* String.swift in Sources */,
 				B259CEF62C255B8100505333 /* ViewController.swift in Sources */,
+				B259CF272C255C7000505333 /* UIViewController.swift in Sources */,
+				B259CF222C255C7000505333 /* TextField.swift in Sources */,
+				B29E10CB2C256C7E007E7F52 /* HomeTableViewCell.swift in Sources */,
+				B29E10D02C256E32007E7F52 /* Constants.swift in Sources */,
+				B259CF232C255C7000505333 /* UIColor.swift in Sources */,
+				B29E10C72C256C3F007E7F52 /* HomeViewController.swift in Sources */,
 				B259CEFC2C255B8100505333 /* E_Challen.xcdatamodeld in Sources */,
 				B259CEF22C255B8100505333 /* AppDelegate.swift in Sources */,
+				B259CF1C2C255C7000505333 /* Date.swift in Sources */,
+				B259CF1F2C255C7000505333 /* DPTagTextView.swift in Sources */,
+				B259CF242C255C7000505333 /* UIImage.swift in Sources */,
+				B29E10C92C256C47007E7F52 /* SearchViewController.swift in Sources */,
+				B29E10C52C256C2E007E7F52 /* SplashViewController.swift in Sources */,
+				B259CF192C255C7000505333 /* Alert.swift in Sources */,
+				B259CF1B2C255C7000505333 /* CGPath.swift in Sources */,
+				B259CF1D2C255C7000505333 /* DateHelper.swift in Sources */,
+				B29E10CD2C256C8A007E7F52 /* SearchTableViewCell.swift in Sources */,
 				B259CEF42C255B8100505333 /* SceneDelegate.swift in Sources */,
+				B259CF1E2C255C7000505333 /* Double.swift in Sources */,
+				B259CF252C255C7000505333 /* UIImageView.swift in Sources */,
+				B259CF262C255C7000505333 /* UIView.swift in Sources */,
+				B259CF1A2C255C7000505333 /* BlurView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

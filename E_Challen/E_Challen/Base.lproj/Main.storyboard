@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FLl-RQ-dM4">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -71,7 +72,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tq3-zr-IHS">
-                                        <rect key="frame" x="20" y="213.66666666666663" width="353" height="425"/>
+                                        <rect key="frame" x="20" y="238.66666666666663" width="353" height="375"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xim-sh-Lux">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="315"/>
@@ -90,29 +91,20 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxV-yp-xSQ">
-                                                <rect key="frame" x="0.0" y="345" width="353" height="80"/>
+                                                <rect key="frame" x="0.0" y="345" width="353" height="30"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Surat E memo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xl-TO-bkN">
-                                                        <rect key="frame" x="105.33333333333333" y="0.0" width="142.66666666666669" height="24"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Surat E Memo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xl-TO-bkN">
+                                                        <rect key="frame" x="105.66666666666669" y="0.0" width="142" height="24"/>
                                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="20"/>
                                                         <color key="textColor" name="AppColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jik-AS-Vho">
-                                                        <rect key="frame" x="20" y="36" width="313" height="44"/>
-                                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
-                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="Jik-AS-Vho" firstAttribute="leading" secondItem="jxV-yp-xSQ" secondAttribute="leading" constant="20" id="7ok-Tu-SV7"/>
                                                     <constraint firstItem="5Xl-TO-bkN" firstAttribute="centerX" secondItem="jxV-yp-xSQ" secondAttribute="centerX" id="OU8-6l-cyJ"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Jik-AS-Vho" secondAttribute="trailing" constant="20" id="d2f-Em-oxA"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Jik-AS-Vho" secondAttribute="bottom" id="kVb-NJ-ZeQ"/>
                                                     <constraint firstItem="5Xl-TO-bkN" firstAttribute="top" secondItem="jxV-yp-xSQ" secondAttribute="top" id="mNg-Ij-vKd"/>
-                                                    <constraint firstAttribute="height" constant="80" id="qCw-su-syj"/>
+                                                    <constraint firstAttribute="height" constant="30" id="qCw-su-syj"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -120,7 +112,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="jxV-yp-xSQ" secondAttribute="trailing" id="5O2-Ah-gSA"/>
                                             <constraint firstAttribute="bottom" secondItem="jxV-yp-xSQ" secondAttribute="bottom" id="6Pw-Di-bQs"/>
-                                            <constraint firstAttribute="height" constant="425" id="APy-o5-7eS"/>
+                                            <constraint firstAttribute="height" constant="375" id="APy-o5-7eS"/>
                                             <constraint firstItem="xim-sh-Lux" firstAttribute="top" secondItem="Tq3-zr-IHS" secondAttribute="top" id="O3N-5b-y07"/>
                                             <constraint firstItem="jxV-yp-xSQ" firstAttribute="leading" secondItem="Tq3-zr-IHS" secondAttribute="leading" id="XMe-qN-VNB"/>
                                             <constraint firstItem="jxV-yp-xSQ" firstAttribute="top" secondItem="xim-sh-Lux" secondAttribute="bottom" constant="30" id="am3-FB-OpK"/>
@@ -534,8 +526,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTY-E6-kla">
                                         <rect key="frame" x="20" y="70" width="353" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYY-Li-gvo">
-                                                <rect key="frame" x="149" y="5.3333333333333286" width="55.333333333333343" height="19.333333333333332"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search history" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYY-Li-gvo">
+                                                <rect key="frame" x="119" y="5.3333333333333286" width="115.33333333333331" height="19.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

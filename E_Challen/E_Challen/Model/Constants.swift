@@ -16,4 +16,6 @@ class Constant{
         static let MAIN = UIStoryboard(name: "Main", bundle: nil)
         
     }
+    
+    var GOOGLEAD_INTERSTITIAL = "ca-app-pub-3940256099942544/4411468910"
 }

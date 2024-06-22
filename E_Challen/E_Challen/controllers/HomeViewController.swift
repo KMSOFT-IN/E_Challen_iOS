@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
-class HomeViewController: UIViewController, UITextFieldDelegate {
+class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewDelegate, GADFullScreenContentDelegate{
  
+    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var noDatalebl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIButton!
@@ -17,10 +19,26 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     private var vehicles:  [Vehicle] = []
     var manager = CoreDataManager()
     var isCheck: Bool = false
+    var bannerView: GADBannerView!
+    var interstitial: GAMInterstitialAd?
+    var searchCount: Int = 1
+    private var isAdLoaded: Bool = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bannerView = GADBannerView(adSize: GADAdSizeBanner)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.layer.cornerRadius = 8.0
+        bannerView.clipsToBounds = true
+        bannerView.delegate = self
+        
+        self.setInterstitialAD()
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
@@ -37,7 +55,49 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       
+        self.setSearchBUttonUI()
+    }
+    
+  
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        
+        let safeArea = view.safeAreaLayoutGuide
+        
+        // Add constraints
+        NSLayoutConstraint.activate([
+            bannerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
+            bannerView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            bannerView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, constant: -40)
+        ])
+    }
+
+    
+    
+//    func addBannerViewToView(_ bannerView: GADBannerView) {
+//        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(bannerView)
+//        view.addConstraints(
+//            [NSLayoutConstraint(item: bannerView,
+//                                attribute: .bottom,
+//                                relatedBy: .equal,
+//                                toItem: view.safeAreaLayoutGuide,
+//                                attribute: .bottom,
+//                                multiplier: 1,
+//                                constant: 0),
+//             NSLayoutConstraint(item: bannerView,
+//                                attribute: .centerX,
+//                                relatedBy: .equal,
+//                                toItem: view,
+//                                attribute: .centerX,
+//                                multiplier: 1,
+//                                constant: 0)
+//            ])
+//    }
+    
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("Banner Ad is Received In Magical View Controller")
     }
     
     func fetchData() {
@@ -45,53 +105,161 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
           self.tableView.reloadData()
     }
     
+    func setSearchBUttonUI() {
+        self.searchButton.setTitle("Search", for: .normal)
+        
+        if self.searchCount >= 3 {
+            self.searchButton.setTitle("See ad and Search", for: .normal)
+        }
+    }
+    
+    
     static func getInstance() -> HomeViewController {
         return Constant.Storyboard.MAIN.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
+    func loadWebView() {
+        let webViewController = ViewController.getInstance()
+        let uppercasedVehicleNumber = txtVehicle.text?.uppercased()
+        webViewController.vehicleNumber = uppercasedVehicleNumber
+        self.navigationController?.pushViewController(webViewController, animated: true)
+        self.txtVehicle.text = ""
+    }
+    
+    func loadInertilaAd() {
+        if let interstitial = self.interstitial {
+            interstitial.present(fromRootViewController: self)
+        }
+    }
+    
+    func setInterstitialAD() {
+        let request = GAMRequest()
+        GAMInterstitialAd.load(withAdManagerAdUnitID: "ca-app-pub-3940256099942544/4411468910",
+                               request: request,
+                               completionHandler: { [weak self] ad, error in
+            guard let self = self else { return }
+            //            self.activityIndicator.stopAnimating()
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            self.interstitial = ad
+            self.interstitial?.fullScreenContentDelegate = self
+            self.isAdLoaded = true
+        })
+    }
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+        self.setInterstitialAD()
+        self.loadWebView()
+    }
+    
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        self.setInterstitialAD()
+        print("Ad will present full screen content.")
+    }
+    
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+      //  self.setInterstitialAD()
+        print("Ad did dismiss full screen content.")
+        self.loadWebView()
+        
+    }
+    
     @IBAction func searchButtontapped(_ sender: Any) {
+     
         guard let txtVehicle = txtVehicle.text , !txtVehicle.isEmpty else {
             openAlert(message: "Please enter vehicle number.")
             return
         }
         
-        let uppercasedVehicleNumber = txtVehicle.uppercased()
-        
-        print("All validations are done!!! good to go...")
-        if self.isCheck {
-            if manager.vehicleNumberExists(uppercasedVehicleNumber) {
-                let historyVehicle = HistoryModel(id: UUID().uuidString,
-                                                  vehicle_number: uppercasedVehicleNumber,
-                                                  createdAt: Date().timeIntervalSince1970)
-                
-                manager.addHistory(historyVehicle)
-                self.txtVehicle.text = ""
+        print("search count \(self.searchCount)")
+        if self.searchCount >= 3 {
+            self.searchCount = 1
+            self.loadInertilaAd()
+            
+            if isAdLoaded, let interstitial = interstitial {
+                interstitial.present(fromRootViewController: self)
+                isAdLoaded = false // Reset the flag after presenting the ad
             } else {
-                let vehicle = VehicleModel(id: UUID().uuidString,
-                                           vehicle_number: uppercasedVehicleNumber,
-                                           createdAt: Date().timeIntervalSince1970)
-                manager.addUser(vehicle)
-                self.txtVehicle.text = ""
-                self.fetchData()
+                print("Ad wasn't ready")
+            }
+            let uppercasedVehicleNumber = txtVehicle.uppercased()
+            
+            print("All validations are done!!! good to go...")
+            if self.isCheck {
+                if manager.vehicleNumberExists(uppercasedVehicleNumber) {
+                    let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                                      vehicle_number: uppercasedVehicleNumber,
+                                                      createdAt: Date().timeIntervalSince1970)
+                    
+                    manager.addHistory(historyVehicle)
+                   // self.txtVehicle.text = ""
+                } else {
+                    let vehicle = VehicleModel(id: UUID().uuidString,
+                                               vehicle_number: uppercasedVehicleNumber,
+                                               createdAt: Date().timeIntervalSince1970)
+                    manager.addUser(vehicle)
+                  //  self.txtVehicle.text = ""
+                    self.fetchData()
+                    let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                                      vehicle_number: uppercasedVehicleNumber,
+                                                      createdAt: Date().timeIntervalSince1970)
+                    
+                    manager.addHistory(historyVehicle)
+                }
+            }
+            else {
+                
                 let historyVehicle = HistoryModel(id: UUID().uuidString,
                                                   vehicle_number: uppercasedVehicleNumber,
                                                   createdAt: Date().timeIntervalSince1970)
-                
+               // self.txtVehicle.text = ""
                 manager.addHistory(historyVehicle)
             }
-        }
-        else {
-            
-            let historyVehicle = HistoryModel(id: UUID().uuidString,
-                                              vehicle_number: uppercasedVehicleNumber,
-                                              createdAt: Date().timeIntervalSince1970)
-            self.txtVehicle.text = ""
-            manager.addHistory(historyVehicle)
-        }
+
+        } else {
+            self.searchCount += 1
         
-        let webViewController = ViewController.getInstance()
-        webViewController.vehicleNumber = uppercasedVehicleNumber
-        self.navigationController?.pushViewController(webViewController, animated: true)
+            let uppercasedVehicleNumber = txtVehicle.uppercased()
+            
+            print("All validations are done!!! good to go...")
+            if self.isCheck {
+                if manager.vehicleNumberExists(uppercasedVehicleNumber) {
+                    let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                                      vehicle_number: uppercasedVehicleNumber,
+                                                      createdAt: Date().timeIntervalSince1970)
+                    
+                    manager.addHistory(historyVehicle)
+                    self.txtVehicle.text = ""
+                } else {
+                    let vehicle = VehicleModel(id: UUID().uuidString,
+                                               vehicle_number: uppercasedVehicleNumber,
+                                               createdAt: Date().timeIntervalSince1970)
+                    manager.addUser(vehicle)
+                    self.txtVehicle.text = ""
+                    self.fetchData()
+                    let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                                      vehicle_number: uppercasedVehicleNumber,
+                                                      createdAt: Date().timeIntervalSince1970)
+                    
+                    manager.addHistory(historyVehicle)
+                }
+            }
+            else {
+                
+                let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                                  vehicle_number: uppercasedVehicleNumber,
+                                                  createdAt: Date().timeIntervalSince1970)
+                self.txtVehicle.text = ""
+                manager.addHistory(historyVehicle)
+            }
+            
+            let webViewController = ViewController.getInstance()
+            webViewController.vehicleNumber = uppercasedVehicleNumber
+            self.navigationController?.pushViewController(webViewController, animated: true)
+        }
     }
     
     @IBAction func historyButtonTapped(_ sender: Any) {

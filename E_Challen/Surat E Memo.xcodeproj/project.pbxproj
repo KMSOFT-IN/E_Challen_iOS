@@ -45,7 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B259CEEE2C255B8100505333 /* E_Challen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = E_Challen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B259CEEE2C255B8100505333 /* Surat E Memo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Surat E Memo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B259CEF12C255B8100505333 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B259CEF32C255B8100505333 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B259CEF52C255B8100505333 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		B259CEEF2C255B8100505333 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B259CEEE2C255B8100505333 /* E_Challen.app */,
+				B259CEEE2C255B8100505333 /* Surat E Memo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,9 +188,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B259CEED2C255B8100505333 /* E_Challen */ = {
+		B259CEED2C255B8100505333 /* Surat E Memo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B259CF052C255B8200505333 /* Build configuration list for PBXNativeTarget "E_Challen" */;
+			buildConfigurationList = B259CF052C255B8200505333 /* Build configuration list for PBXNativeTarget "Surat E Memo" */;
 			buildPhases = (
 				B259CEEA2C255B8100505333 /* Sources */,
 				B259CEEB2C255B8100505333 /* Frameworks */,
@@ -200,12 +200,12 @@
 			);
 			dependencies = (
 			);
-			name = E_Challen;
+			name = "Surat E Memo";
 			packageProductDependencies = (
 				B21E3ECA2C25971C0070FC29 /* IQKeyboardManagerSwift */,
 			);
 			productName = E_Challen;
-			productReference = B259CEEE2C255B8100505333 /* E_Challen.app */;
+			productReference = B259CEEE2C255B8100505333 /* Surat E Memo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -223,7 +223,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B259CEE92C255B8100505333 /* Build configuration list for PBXProject "E_Challen" */;
+			buildConfigurationList = B259CEE92C255B8100505333 /* Build configuration list for PBXProject "Surat E Memo" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -239,7 +239,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B259CEED2C255B8100505333 /* E_Challen */,
+				B259CEED2C255B8100505333 /* Surat E Memo */,
 			);
 		};
 /* End PBXProject section */
@@ -461,7 +461,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = in.surat.challan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Surat E Memo";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = eChallan_Proivisionaling_profile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -494,7 +494,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = in.surat.challan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Surat E Memo";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = eChallan_Proivisionaling_profile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -506,7 +506,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B259CEE92C255B8100505333 /* Build configuration list for PBXProject "E_Challen" */ = {
+		B259CEE92C255B8100505333 /* Build configuration list for PBXProject "Surat E Memo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B259CF032C255B8200505333 /* Debug */,
@@ -515,7 +515,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B259CF052C255B8200505333 /* Build configuration list for PBXNativeTarget "E_Challen" */ = {
+		B259CF052C255B8200505333 /* Build configuration list for PBXNativeTarget "Surat E Memo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B259CF062C255B8200505333 /* Debug */,

@@ -43,18 +43,18 @@ class CoreDataManager {
     }
     
     func vehicleNumberExists(_ vehicleNumber: String) -> Bool {
-          let fetchRequest: NSFetchRequest<Vehicle> = Vehicle.fetchRequest()
-          fetchRequest.predicate = NSPredicate(format: "vehicle_Number == %@", vehicleNumber)
-          fetchRequest.fetchLimit = 1
-          
-          do {
-              let count = try context.count(for: fetchRequest)
-              return count > 0
-          } catch {
-              print("Error checking vehicle number existence: \(error)")
-              return false
-          }
-      }
+        let fetchRequest: NSFetchRequest<Vehicle> = Vehicle.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "vehicle_Number == %@", vehicleNumber)
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let count = try context.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print("Error checking vehicle number existence: \(error)")
+            return false
+        }
+    }
     
     func addHistory(_ user: HistoryModel) {
         
@@ -83,49 +83,12 @@ class CoreDataManager {
     
     
     func deleteUser(userEntity: Vehicle) {
-            context.delete(userEntity)
-            do {
-                try context.save()
-            } catch {
-                print("user saving error", error)
-            }
+        context.delete(userEntity)
+        do {
+            try context.save()
+        } catch {
+            print("user saving error", error)
         }
-
-    
-//    func createBudgetEntityFromBudget(budget: HistoryModel) {
-//        
-//        let context = appDelegate.persistentContainer.viewContext
-//
-//        if let entityDescription = NSEntityDescription.entity(forEntityName: "History", in: context) {
-//            
-//            let budgetManagedObject = NSManagedObject(entity: entityDescription, insertInto: context)
-//            
-//            budgetManagedObject.setValue(budget.id, forKey: "id")
-//            budgetManagedObject.setValue(budget.vehicle_number, forKey: "vehicle_Number")
-//            budgetManagedObject.setValue(budget.createdAt, forKey: "createdAt")
-//            
-//            do {
-//                try context.save()
-//                print("Budget saved to Core Data.")
-//            } catch {
-//                print("Error saving Budget to Core Data: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-//    
-//    func fetchBudgets() -> [History] {
-//        let context = appDelegate.persistentContainer.viewContext
-//        let fetchRequest: NSFetchRequest<History> = History.fetchRequest()
-//        
-//        do {
-//            let budgets = try context.fetch(fetchRequest)
-//            return budgets
-//        } catch {
-//            print("Error fetching budgets: \(error.localizedDescription)")
-//            return []
-//        }
-//    }
-//    
-
+    }
     
 }

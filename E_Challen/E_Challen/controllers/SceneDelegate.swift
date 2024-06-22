@@ -53,7 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func navigateToHomeVC() {
-        let isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
+      //  let isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
         
 //        if isFirstLaunch {
 //            // Show HomeViewController

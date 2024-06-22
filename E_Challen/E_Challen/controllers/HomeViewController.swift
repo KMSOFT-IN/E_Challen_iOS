@@ -60,7 +60,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         print("All validations are done!!! good to go...")
         if self.isCheck {
             if manager.vehicleNumberExists(uppercasedVehicleNumber) {
-               // openAlert(message: "Vehicle number already exists.")
                 let historyVehicle = HistoryModel(id: UUID().uuidString,
                                                   vehicle_number: uppercasedVehicleNumber,
                                                   createdAt: Date().timeIntervalSince1970)
@@ -86,20 +85,15 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             let historyVehicle = HistoryModel(id: UUID().uuidString,
                                               vehicle_number: uppercasedVehicleNumber,
                                               createdAt: Date().timeIntervalSince1970)
-            
+            self.txtVehicle.text = ""
             manager.addHistory(historyVehicle)
         }
         
-       // if isValidVehicleNumber(txtVehicle) {
-            let webViewController = ViewController.getInstance()
-            webViewController.vehicleNumber = uppercasedVehicleNumber
-            self.navigationController?.pushViewController(webViewController, animated: true)
-//        } else {
-//            openAlert(message: "Invalid vehicle number.")
-//        }
-      //O  navigationController?.popViewController(animated: true)
+        let webViewController = ViewController.getInstance()
+        webViewController.vehicleNumber = uppercasedVehicleNumber
+        self.navigationController?.pushViewController(webViewController, animated: true)
     }
-  
+    
     @IBAction func historyButtonTapped(_ sender: Any) {
         let vc = SearchViewController.getInstance()
         self.navigationController?.pushViewController(vc, animated: true)

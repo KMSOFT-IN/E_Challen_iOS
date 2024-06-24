@@ -13,7 +13,7 @@ import GoogleMobileAds
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    let urlString = "https://raw.githubusercontent.com/bestappinfo/best-app/main/ids.json"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -21,8 +21,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.resignOnTouchOutside = true
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+    
+//        if let gadAppID = UserDefaults.standard.string(forKey: Constant.UserDefault.APP_ID) {
+//            GADMobileAds.sharedInstance().start(completionHandler: nil)
+//            print("Google AdMob initialized with App ID: \(gadAppID)")
+//        } else {
+//            print("Google AdMob App ID not found")
+//        }
+        
+        self.fetchAdIDs()
         return true
     }
+    
+    func fetchAdIDs() {
+           guard let url = URL(string: urlString) else { return }
+           
+           let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+               guard let self = self else { return }
+               
+               if let error = error {
+                   print("Failed to fetch data: \(error)")
+                   return
+               }
+               
+               guard let data = data else {
+                   print("No data received")
+                   return
+               }
+               
+               do {
+                   let adIDs = try JSONDecoder().decode(AdIDs.self, from: data)
+                   DispatchQueue.main.async {
+                       if adIDs.adsEnable {
+                           UserdefaultHelper.setAppId(value: adIDs.iosAppID)
+                           UserdefaultHelper.setBannerId(value: adIDs.iosBannerID)
+                           UserdefaultHelper.setIntertitialId(value: adIDs.iosInterstitialID)
+                           UserdefaultHelper.setadsEnable(value: true)
+
+                           print("iOS App ID: \(adIDs.iosAppID)")
+                           print("iOS Banner ID: \(adIDs.iosBannerID)")
+                           print("iOS Interstitial ID: \(adIDs.iosInterstitialID)")
+                       } else {
+                           print("Ads are disabled")
+                           UserdefaultHelper.setadsEnable(value: false)
+                       }
+                   }
+               } catch {
+                   print("Failed to decode JSON: \(error)")
+               }
+           }
+           
+           task.resume()
+       }
 
     // MARK: UISceneSession Lifecycle
 

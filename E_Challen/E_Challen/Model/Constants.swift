@@ -17,5 +17,12 @@ class Constant{
         
     }
     
+    class UserDefault {
+        static let APP_ID = "GADApplicationIdentifier"
+        static let BANNER_ID = "GADBannerIdentifier"
+        static let INTERSTITIAL_ID = "GADInterstitialIdentifier"
+        static let AD_ENABLE = "isAdsEnable"
+    }
+    
     var GOOGLEAD_INTERSTITIAL = "ca-app-pub-3940256099942544/4411468910"
 }

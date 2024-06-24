@@ -23,21 +23,31 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     var interstitial: GAMInterstitialAd?
     var searchCount: Int = 1
     private var isAdLoaded: Bool = false
-
-    
+    var adsEnable:Bool = false
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        bannerView = GADBannerView(adSize: GADAdSizeBanner)
-        addBannerViewToView(bannerView)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-        bannerView.layer.cornerRadius = 8.0
-        bannerView.clipsToBounds = true
-        bannerView.delegate = self
+      
+        if UserdefaultHelper.getadsEnable() ?? false {
+            self.adsEnable = true
+        } else {
+            self.adsEnable = false
+        }
         
-        self.setInterstitialAD()
+        if self.adsEnable {
+            
+            bannerView = GADBannerView(adSize: GADAdSizeBanner)
+            addBannerViewToView(bannerView)
+            bannerView.adUnitID = UserdefaultHelper.getBannerId()
+            //        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView.rootViewController = self
+            bannerView.load(GADRequest())
+            bannerView.layer.cornerRadius = 8.0
+            bannerView.clipsToBounds = true
+            bannerView.delegate = self
+            
+            self.setInterstitialAD()
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -55,17 +65,16 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.setSearchBUttonUI()
+        if self.adsEnable {
+            self.setSearchBUttonUI()
+        }
     }
-    
   
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)
-        
         let safeArea = view.safeAreaLayoutGuide
         
-        // Add constraints
         NSLayoutConstraint.activate([
             bannerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
             bannerView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
@@ -73,29 +82,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         ])
     }
 
-    
-    
-//    func addBannerViewToView(_ bannerView: GADBannerView) {
-//        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(bannerView)
-//        view.addConstraints(
-//            [NSLayoutConstraint(item: bannerView,
-//                                attribute: .bottom,
-//                                relatedBy: .equal,
-//                                toItem: view.safeAreaLayoutGuide,
-//                                attribute: .bottom,
-//                                multiplier: 1,
-//                                constant: 0),
-//             NSLayoutConstraint(item: bannerView,
-//                                attribute: .centerX,
-//                                relatedBy: .equal,
-//                                toItem: view,
-//                                attribute: .centerX,
-//                                multiplier: 1,
-//                                constant: 0)
-//            ])
-//    }
-    
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("Banner Ad is Received In Magical View Controller")
     }
@@ -125,7 +111,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         self.navigationController?.pushViewController(webViewController, animated: true)
         self.txtVehicle.text = ""
     }
-    
+//    ca-app-pub-3940256099942544/4411468910
     func loadInertilaAd() {
         if let interstitial = self.interstitial {
             interstitial.present(fromRootViewController: self)
@@ -134,7 +120,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     
     func setInterstitialAD() {
         let request = GAMRequest()
-        GAMInterstitialAd.load(withAdManagerAdUnitID: "ca-app-pub-3940256099942544/4411468910",
+        GAMInterstitialAd.load(withAdManagerAdUnitID: UserdefaultHelper.getInterstitialId() ?? "" ,
+      //  GAMInterstitialAd.load(withAdManagerAdUnitID: "ca-app-pub-3940256099942544/4411468910",
                                request: request,
                                completionHandler: { [weak self] ad, error in
             guard let self = self else { return }
@@ -177,16 +164,22 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         print("search count \(self.searchCount)")
         if self.searchCount >= 3 {
             self.searchCount = 1
-            self.loadInertilaAd()
-            
-            if isAdLoaded, let interstitial = interstitial {
-                interstitial.present(fromRootViewController: self)
-                isAdLoaded = false // Reset the flag after presenting the ad
-            } else {
-                print("Ad wasn't ready")
-            }
             let uppercasedVehicleNumber = txtVehicle.uppercased()
-            
+            if self.adsEnable {
+                self.loadInertilaAd()
+                if isAdLoaded, let interstitial = interstitial {
+                    interstitial.present(fromRootViewController: self)
+                    isAdLoaded = false // Reset the flag after presenting the ad
+                } else {
+                    print("Ad wasn't ready")
+                    let webViewController = ViewController.getInstance()
+                    webViewController.vehicleNumber = uppercasedVehicleNumber
+                    self.navigationController?.pushViewController(webViewController, animated: true)
+                }
+            } else {
+                self.txtVehicle.text = ""
+            }
+          
             print("All validations are done!!! good to go...")
             if self.isCheck {
                 if manager.vehicleNumberExists(uppercasedVehicleNumber) {
@@ -218,7 +211,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
                // self.txtVehicle.text = ""
                 manager.addHistory(historyVehicle)
             }
-
+            if self.adsEnable == false {
+                let webViewController = ViewController.getInstance()
+                webViewController.vehicleNumber = uppercasedVehicleNumber
+                self.navigationController?.pushViewController(webViewController, animated: true)
+            }
+            
         } else {
             self.searchCount += 1
         
@@ -356,5 +354,27 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
         let selectedView = UIView()
         selectedView.backgroundColor = UIColor.clear
         cell.selectedBackgroundView = selectedView
+    }
+}
+
+
+
+struct AdIDs: Codable {
+    let adsEnable: Bool
+    let androidAppID: String
+    let androidBannerID: String
+    let androidInterstitialID: String
+    let iosAppID: String
+    let iosBannerID: String
+    let iosInterstitialID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case adsEnable = "adsEnable"
+        case androidAppID = "android_app_id"
+        case androidBannerID = "android_banner_id"
+        case androidInterstitialID = "android_interstitial_id"
+        case iosAppID = "ios_app_id"
+        case iosBannerID = "ios_banner_id"
+        case iosInterstitialID = "ios_interstitial_id"
     }
 }

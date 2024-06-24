@@ -69,18 +69,41 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
             self.setSearchBUttonUI()
         }
     }
-  
+    
     func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        let safeArea = view.safeAreaLayoutGuide
-        
-        NSLayoutConstraint.activate([
-            bannerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
-            bannerView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            bannerView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, constant: -40)
-        ])
-    }
+          bannerView.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.backgroundColor = .white
+          view.addSubview(bannerView)
+          view.addConstraints(
+              [NSLayoutConstraint(item: bannerView,
+                                  attribute: .bottom,
+                                  relatedBy: .equal,
+                                  toItem: view.safeAreaLayoutGuide,
+                                  attribute: .bottom,
+                                  multiplier: 1,
+                                  constant: 0),
+               NSLayoutConstraint(item: bannerView,
+                                  attribute: .centerX,
+                                  relatedBy: .equal,
+                                  toItem: view,
+                                  attribute: .centerX,
+                                  multiplier: 1,
+                                  constant: 0)
+              ])
+      }
+  
+//    func addBannerViewToView(_ bannerView: GADBannerView) {
+//        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        bannerView.backgroundColor = .white
+//        view.addSubview(bannerView)
+//        let safeArea = view.safeAreaLayoutGuide
+//        
+//        NSLayoutConstraint.activate([
+//            bannerView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0),
+//            bannerView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+//            bannerView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, constant: -40)
+//        ])
+//    }
 
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("Banner Ad is Received In Magical View Controller")
@@ -155,16 +178,14 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     }
     
     @IBAction func searchButtontapped(_ sender: Any) {
-     
-        guard let txtVehicle = txtVehicle.text , !txtVehicle.isEmpty else {
+        guard let trimmedText = txtVehicle.text?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmedText.isEmpty else {
             openAlert(message: "Please enter vehicle number.")
             return
         }
-        
         print("search count \(self.searchCount)")
         if self.searchCount >= 3 {
             self.searchCount = 1
-            let uppercasedVehicleNumber = txtVehicle.uppercased()
+            let uppercasedVehicleNumber = trimmedText.uppercased()
             if self.adsEnable {
                 self.loadInertilaAd()
                 if isAdLoaded, let interstitial = interstitial {
@@ -220,7 +241,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         } else {
             self.searchCount += 1
         
-            let uppercasedVehicleNumber = txtVehicle.uppercased()
+            let uppercasedVehicleNumber = trimmedText.uppercased()
             
             print("All validations are done!!! good to go...")
             if self.isCheck {

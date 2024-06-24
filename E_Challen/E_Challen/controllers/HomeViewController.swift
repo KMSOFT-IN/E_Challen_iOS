@@ -10,6 +10,7 @@ import GoogleMobileAds
 
 class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewDelegate, GADFullScreenContentDelegate{
  
+    @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var noDatalebl: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -30,8 +31,10 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
       
         if UserdefaultHelper.getadsEnable() ?? false {
             self.adsEnable = true
+            self.tableViewBottom.constant = 100
         } else {
             self.adsEnable = false
+            self.tableViewBottom.constant = 20
         }
         
         if self.adsEnable {
@@ -129,7 +132,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     
     func loadWebView() {
         let webViewController = ViewController.getInstance()
-        let uppercasedVehicleNumber = txtVehicle.text?.uppercased()
+        guard let trimmedText = txtVehicle.text?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmedText.isEmpty else {
+            openAlert(message: "Please enter vehicle number.")
+            return
+        }
+        let cleanedVehicleNumber = trimmedText.replacingOccurrences(of: " ", with: "")
+        let uppercasedVehicleNumber = cleanedVehicleNumber.uppercased()
         webViewController.vehicleNumber = uppercasedVehicleNumber
         self.navigationController?.pushViewController(webViewController, animated: true)
         self.txtVehicle.text = ""
@@ -182,10 +190,14 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
             openAlert(message: "Please enter vehicle number.")
             return
         }
+        
+        let cleanedVehicleNumber = trimmedText.replacingOccurrences(of: " ", with: "")
+        let uppercasedVehicleNumber = cleanedVehicleNumber.uppercased()
+        
         print("search count \(self.searchCount)")
         if self.searchCount >= 3 {
             self.searchCount = 1
-            let uppercasedVehicleNumber = trimmedText.uppercased()
+          
             if self.adsEnable {
                 self.loadInertilaAd()
                 if isAdLoaded, let interstitial = interstitial {
@@ -241,7 +253,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         } else {
             self.searchCount += 1
         
-            let uppercasedVehicleNumber = trimmedText.uppercased()
+        //    let uppercasedVehicleNumber = trimmedText.uppercased()
             
             print("All validations are done!!! good to go...")
             if self.isCheck {

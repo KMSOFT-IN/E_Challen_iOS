@@ -264,8 +264,8 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Swl-vO-UM4">
                                                                 <rect key="frame" x="0.0" y="37.666666666666657" width="353" height="40"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="GJ 05 HL 1196" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9U4-2u-GNF">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="40"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="GJ05AAXXXX" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9U4-2u-GNF">
+                                                                        <rect key="frame" x="15" y="0.0" width="338" height="40"/>
                                                                         <color key="backgroundColor" name="grey_color"/>
                                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
@@ -277,13 +277,13 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </textField>
                                                                 </subviews>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <color key="backgroundColor" name="grey_color"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="9U4-2u-GNF" secondAttribute="bottom" id="7fh-S2-eX3"/>
-                                                                    <constraint firstItem="9U4-2u-GNF" firstAttribute="leading" secondItem="Swl-vO-UM4" secondAttribute="leading" id="BcB-Xi-ahl"/>
                                                                     <constraint firstAttribute="trailing" secondItem="9U4-2u-GNF" secondAttribute="trailing" id="XAL-H6-hT0"/>
                                                                     <constraint firstItem="9U4-2u-GNF" firstAttribute="top" secondItem="Swl-vO-UM4" secondAttribute="top" id="cNn-hB-7Wc"/>
                                                                     <constraint firstAttribute="height" constant="40" id="x6b-Zn-Nou"/>
+                                                                    <constraint firstItem="9U4-2u-GNF" firstAttribute="leading" secondItem="Swl-vO-UM4" secondAttribute="leading" constant="15" id="zNy-K8-3Dj"/>
                                                                 </constraints>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiuss">
@@ -478,8 +478,8 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0t-af-Cjb">
-                                                <rect key="frame" x="103.66666666666667" y="192.66666666666669" width="145.66666666666663" height="24.666666666666657"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0t-af-Cjb">
+                                                <rect key="frame" x="100.66666666666667" y="192.66666666666669" width="151.66666666666663" height="24.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                                 <color key="textColor" name="AppColor"/>
                                                 <nil key="highlightedColor"/>
@@ -528,6 +528,7 @@
                         <outlet property="saveButton" destination="JNX-uo-Ps0" id="kjk-8g-xHH"/>
                         <outlet property="searchButton" destination="9Bx-TH-oS2" id="GBP-TG-8WB"/>
                         <outlet property="tableView" destination="9Pc-2N-tty" id="ZFT-vS-hJc"/>
+                        <outlet property="tableViewBottom" destination="uRb-G7-Amp" id="Zgk-aj-YPe"/>
                         <outlet property="txtVehicle" destination="9U4-2u-GNF" id="ku7-a6-Izv"/>
                     </connections>
                 </viewController>
@@ -550,7 +551,7 @@
                                         <rect key="frame" x="20" y="60" width="353" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search history" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYY-Li-gvo">
-                                                <rect key="frame" x="119" y="5.3333333333333286" width="115.33333333333331" height="19.333333333333332"/>
+                                                <rect key="frame" x="125.33333333333334" y="5.3333333333333286" width="102.66666666666666" height="19.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -635,8 +636,8 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPZ-2h-uco">
-                                                <rect key="frame" x="110.66666666666666" y="349" width="132" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPZ-2h-uco">
+                                                <rect key="frame" x="107.66666666666667" y="349" width="137.66666666666663" height="24"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
                                                 <color key="textColor" name="AppColor"/>
                                                 <nil key="highlightedColor"/>

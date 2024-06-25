@@ -23,6 +23,7 @@ class Constant{
         static let INTERSTITIAL_ID = "GADInterstitialIdentifier"
         static let AD_ENABLE = "isAdsEnable"
         static let SEARCH_COUNT = "search_count"
+        static let INTERNET = "internet"
     }
     
     var GOOGLEAD_INTERSTITIAL = "ca-app-pub-3940256099942544/4411468910"

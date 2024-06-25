@@ -53,4 +53,13 @@ class UserdefaultHelper {
     static func getSearchCount() -> Int? {
         return UserDefaults.standard.integer(forKey: Constant.UserDefault.SEARCH_COUNT)
     }
+    
+    static func setInternet(value: Bool?) {
+        UserDefaults.standard.set(value, forKey: Constant.UserDefault.INTERNET)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getInternet() -> Bool? {
+        return UserDefaults.standard.bool(forKey: Constant.UserDefault.INTERNET)
+    }
 }

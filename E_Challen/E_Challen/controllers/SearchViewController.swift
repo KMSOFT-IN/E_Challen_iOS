@@ -6,18 +6,30 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, GADFullScreenContentDelegate {
 
     @IBOutlet weak var nodatalebl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     private var histories:  [History] = []
-     var manager = CoreDataManager()
+    var manager = CoreDataManager()
+    var searchCount: Int = 1
+    var interstitial: GAMInterstitialAd?
+    var adsEnable:Bool = false
+    private var isAdLoaded: Bool = false
+    var vehicleNumber: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if UserdefaultHelper.getadsEnable() ?? false {
+            self.adsEnable = true
+        } else {
+            self.adsEnable = false
+        }
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
@@ -25,6 +37,16 @@ class SearchViewController: UIViewController {
         
         self.nodatalebl.isHidden = true
         self.fetchData()
+        self.setInterstitialAD()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.searchCount = UserdefaultHelper.getSearchCount() ?? 1
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UserdefaultHelper.setSearchCount(value: self.searchCount)
     }
     
     func fetchData() {
@@ -43,7 +65,7 @@ class SearchViewController: UIViewController {
     
     func openAlert(message: String) {
            let alertController = UIAlertController(title: "Alert!", message: message, preferredStyle: .alert)
-           let okay = UIAlertAction(title: "Okay", style: .default)
+           let okay = UIAlertAction(title: "Ok", style: .default)
            alertController.addAction(okay)
            present(alertController, animated: true)
        }
@@ -65,19 +87,47 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         
         let history = self.histories[indexPath.row]
         cell.vehicleNumber.text = history.vehicle_Number
+        if self.adsEnable {
+            cell.adImage.isHidden = true
+            
+            if self.searchCount >= 3 {
+                cell.adImage.isHidden = false
+            }
+        }else {
+            cell.adImage.isHidden = true
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vehicle = histories[indexPath.row]
-//                if isValidVehicleNumber(vehicle.vehicle_Number) {
+        if self.searchCount >= 3 {
+            self.searchCount = 1
+            print("^^^ SEARCHVIEW count: \(self.searchCount)")
+            self.vehicleNumber = vehicle.vehicle_Number ?? ""
+            if self.adsEnable {
+                self.loadInertilaAd()
+                if isAdLoaded, let interstitial = interstitial {
+                    interstitial.present(fromRootViewController: self)
+                    isAdLoaded = false // Reset the flag after presenting the ad
+                } else {
+                    print("Ad wasn't ready")
                     let webViewController = ViewController.getInstance()
                     webViewController.vehicleNumber = vehicle.vehicle_Number
                     self.navigationController?.pushViewController(webViewController, animated: true)
-//                } else {
-//                    openAlert(message: "Invalid vehicle number.")
-//                }
+                }
+            } else {
+              //  self.txtVehicle.text = ""
+            }
+        } else {
+            self.searchCount += 1
+            print("^^^ SEARCHVIEW count: \(self.searchCount)")
+            self.vehicleNumber = vehicle.vehicle_Number ?? ""
+            let webViewController = ViewController.getInstance()
+            webViewController.vehicleNumber = vehicle.vehicle_Number
+            self.navigationController?.pushViewController(webViewController, animated: true)
+        }
     }
     
     func isValidVehicleNumber(_ vehicleNumber: String?) -> Bool {
@@ -97,4 +147,60 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         selectedView.backgroundColor = UIColor.clear
         cell.selectedBackgroundView = selectedView
     }
+}
+
+
+extension SearchViewController {
+    func loadWebView() {
+        let webViewController = ViewController.getInstance()
+         let trimmedText = self.vehicleNumber
+       
+        let cleanedVehicleNumber = trimmedText.replacingOccurrences(of: " ", with: "")
+        let uppercasedVehicleNumber = cleanedVehicleNumber.uppercased()
+        webViewController.vehicleNumber = uppercasedVehicleNumber
+        self.navigationController?.pushViewController(webViewController, animated: true)
+    }
+//    ca-app-pub-3940256099942544/4411468910
+    func loadInertilaAd() {
+        if let interstitial = self.interstitial {
+            interstitial.present(fromRootViewController: self)
+        }
+    }
+    
+    func setInterstitialAD() {
+        let request = GAMRequest()
+        GAMInterstitialAd.load(withAdManagerAdUnitID: UserdefaultHelper.getInterstitialId() ?? "" ,
+      //  GAMInterstitialAd.load(withAdManagerAdUnitID: "ca-app-pub-3940256099942544/4411468910",
+                               request: request,
+                               completionHandler: { [weak self] ad, error in
+            guard let self = self else { return }
+            //            self.activityIndicator.stopAnimating()
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            self.interstitial = ad
+            self.interstitial?.fullScreenContentDelegate = self
+            self.isAdLoaded = true
+        })
+    }
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+        self.setInterstitialAD()
+        self.loadWebView()
+    }
+    
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        self.setInterstitialAD()
+        print("Ad will present full screen content.")
+    }
+    
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+      //  self.setInterstitialAD()
+        print("Ad did dismiss full screen content.")
+        self.loadWebView()
+        
+    }
+    
 }

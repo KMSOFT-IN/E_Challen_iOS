@@ -44,4 +44,13 @@ class UserdefaultHelper {
     static func getadsEnable() -> Bool? {
         return UserDefaults.standard.bool(forKey: Constant.UserDefault.AD_ENABLE)
     }
+    
+    static func setSearchCount(value: Int?) {
+        UserDefaults.standard.set(value, forKey: Constant.UserDefault.SEARCH_COUNT)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getSearchCount() -> Int? {
+        return UserDefaults.standard.integer(forKey: Constant.UserDefault.SEARCH_COUNT)
+    }
 }

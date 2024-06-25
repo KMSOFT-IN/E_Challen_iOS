@@ -25,6 +25,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     var searchCount: Int = 1
     private var isAdLoaded: Bool = false
     var adsEnable:Bool = false
+    var vehicleNumber: String = ""
+    var isFromSearchBtn:Bool = false
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +70,19 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.adsEnable {
-            self.setSearchBUttonUI()
-        }
+        self.searchCount = UserdefaultHelper.getSearchCount() ?? 0
+        self.setSearchBUttonUI()
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UserdefaultHelper.setSearchCount(value: self.searchCount)
+        self.isFromSearchBtn = false
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
           bannerView.translatesAutoresizingMaskIntoConstraints = false
-        bannerView.backgroundColor = .white
+        bannerView.backgroundColor = .clear
           view.addSubview(bannerView)
           view.addConstraints(
               [NSLayoutConstraint(item: bannerView,
@@ -118,10 +125,14 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     }
     
     func setSearchBUttonUI() {
-        self.searchButton.setTitle("Search", for: .normal)
-        
-        if self.searchCount >= 3 {
-            self.searchButton.setTitle("See ad and Search", for: .normal)
+        if self.adsEnable {
+            self.searchButton.setTitle("Search", for: .normal)
+            
+            if self.searchCount >= 3 {
+                self.searchButton.setTitle("See ad and Search", for: .normal)
+            }
+        }else {
+            self.searchButton.setTitle("Search", for: .normal)
         }
     }
     
@@ -142,7 +153,17 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         self.navigationController?.pushViewController(webViewController, animated: true)
         self.txtVehicle.text = ""
     }
-//    ca-app-pub-3940256099942544/4411468910
+    
+    func loadWebView2() {
+        let webViewController = ViewController.getInstance()
+        let trimmedText = self.vehicleNumber
+        let cleanedVehicleNumber = trimmedText.replacingOccurrences(of: " ", with: "")
+        let uppercasedVehicleNumber = cleanedVehicleNumber.uppercased()
+        webViewController.vehicleNumber = uppercasedVehicleNumber
+        self.navigationController?.pushViewController(webViewController, animated: true)
+        self.txtVehicle.text = ""
+    }
+
     func loadInertilaAd() {
         if let interstitial = self.interstitial {
             interstitial.present(fromRootViewController: self)
@@ -170,7 +191,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("Ad did fail to present full screen content.")
         self.setInterstitialAD()
-        self.loadWebView()
+        if self.isFromSearchBtn {
+            self.loadWebView()
+        } else {
+            self.loadWebView2()
+        }
+        
     }
     
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
@@ -181,11 +207,17 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
       //  self.setInterstitialAD()
         print("Ad did dismiss full screen content.")
-        self.loadWebView()
+        if self.isFromSearchBtn {
+            self.loadWebView()
+            self.isFromSearchBtn = false
+        }else {
+            self.loadWebView2()
+        }
         
     }
     
     @IBAction func searchButtontapped(_ sender: Any) {
+        self.isFromSearchBtn = true
         guard let trimmedText = txtVehicle.text?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmedText.isEmpty else {
             openAlert(message: "Please enter vehicle number.")
             return
@@ -310,14 +342,14 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     
     func openAlert(message: String) {
            let alertController = UIAlertController(title: "Alert!", message: message, preferredStyle: .alert)
-           let okay = UIAlertAction(title: "Okay", style: .default)
+           let okay = UIAlertAction(title: "Ok", style: .default)
            alertController.addAction(okay)
            present(alertController, animated: true)
        }
        
        func showAlert() {
            let alertController = UIAlertController(title: nil, message: "User added", preferredStyle: .alert)
-           let okay = UIAlertAction(title: "Okay", style: .default)
+           let okay = UIAlertAction(title: "Ok", style: .default)
            alertController.addAction(okay)
            present(alertController, animated: true)
        }
@@ -340,8 +372,17 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
         let vehicle = self.vehicles[indexPath.row]
         
         cell.vehicleNumber.text = vehicle.vehicle_Number
+        if self.adsEnable {
+            cell.adImage.isHidden = true
+            
+            if self.searchCount >= 3 {
+                cell.adImage.isHidden = false
+            }
+        }else {
+            cell.adImage.isHidden = true
+        }
         
-        cell.deleteCallBack = {
+       cell.deleteCallBack = {
             let alert = UIAlertController(title: "Surat E Memo", message: "Are you sure you want to delete this vehicle number?", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -362,13 +403,33 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vehicle = vehicles[indexPath.row]
-               // if isValidVehicleNumber(vehicle.vehicle_Number) {
+
+        if self.searchCount >= 3 {
+            self.searchCount = 1
+            self.vehicleNumber = vehicle.vehicle_Number ?? ""
+            print("^^^ HOMEVIEW count: \(self.searchCount)")
+            if self.adsEnable {
+                self.loadInertilaAd()
+                if isAdLoaded, let interstitial = interstitial {
+                    interstitial.present(fromRootViewController: self)
+                    isAdLoaded = false // Reset the flag after presenting the ad
+                } else {
+                    print("Ad wasn't ready")
                     let webViewController = ViewController.getInstance()
                     webViewController.vehicleNumber = vehicle.vehicle_Number
                     self.navigationController?.pushViewController(webViewController, animated: true)
-//                } else {
-//                    openAlert(message: "Invalid vehicle number.")
-//                }
+                }
+            } else {
+                self.txtVehicle.text = ""
+            }
+        } else {
+            self.vehicleNumber = vehicle.vehicle_Number ?? ""
+            self.searchCount += 1
+            print("^^^ HOMEVIEW count: \(self.searchCount)")
+            let webViewController = ViewController.getInstance()
+            webViewController.vehicleNumber = vehicle.vehicle_Number
+            self.navigationController?.pushViewController(webViewController, animated: true)
+        }
     }
     
     func isValidVehicleNumber(_ vehicleNumber: String?) -> Bool {

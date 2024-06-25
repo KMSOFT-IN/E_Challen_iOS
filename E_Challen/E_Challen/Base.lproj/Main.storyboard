@@ -419,36 +419,38 @@
                                                                             <color key="textColor" name="AppColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_delete_btn_bg" translatesAutoresizingMaskIntoConstraints="NO" id="4no-1O-aAS">
-                                                                            <rect key="frame" x="313" y="11.666666666666664" width="30" height="30"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="30" id="GOg-kl-S0i"/>
-                                                                                <constraint firstAttribute="width" constant="30" id="mIo-Mm-bWJ"/>
-                                                                            </constraints>
-                                                                        </imageView>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krh-OB-6Rr">
-                                                                            <rect key="frame" x="313" y="11.666666666666664" width="30" height="30"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="30" id="Osc-7d-EVB"/>
-                                                                                <constraint firstAttribute="width" constant="30" id="oyE-Ge-g1Y"/>
-                                                                            </constraints>
-                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                            <state key="normal" image="ic_delete"/>
-                                                                            <connections>
-                                                                                <action selector="deleteButtontapped:" destination="2lV-Wn-y9e" eventType="touchUpInside" id="lHE-O5-LkQ"/>
-                                                                            </connections>
-                                                                        </button>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JF1-rJ-389">
+                                                                            <rect key="frame" x="263" y="11.666666666666664" width="80" height="30"/>
+                                                                            <subviews>
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_ad" translatesAutoresizingMaskIntoConstraints="NO" id="6X4-xs-fSv">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="30" id="1K3-Kf-BKr"/>
+                                                                                        <constraint firstAttribute="height" constant="30" id="5k5-Wp-4WJ"/>
+                                                                                    </constraints>
+                                                                                </imageView>
+                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0Q-ZF-nwk">
+                                                                                    <rect key="frame" x="50" y="0.0" width="30" height="30"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="30" id="2Iz-dm-Dpp"/>
+                                                                                        <constraint firstAttribute="width" constant="30" id="SbF-aP-Ik9"/>
+                                                                                    </constraints>
+                                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                    <state key="normal" image="ic_delete_new"/>
+                                                                                    <connections>
+                                                                                        <action selector="deleteButtontapped:" destination="2lV-Wn-y9e" eventType="touchUpInside" id="Tjd-m3-4JN"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                            </subviews>
+                                                                        </stackView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="4no-1O-aAS" secondAttribute="trailing" constant="10" id="f7D-r1-dwm"/>
+                                                                        <constraint firstItem="JF1-rJ-389" firstAttribute="centerY" secondItem="c0e-eg-Fdn" secondAttribute="centerY" id="cdH-X2-gTh"/>
                                                                         <constraint firstAttribute="height" constant="53" id="gyA-TQ-o7m"/>
-                                                                        <constraint firstItem="krh-OB-6Rr" firstAttribute="centerY" secondItem="c0e-eg-Fdn" secondAttribute="centerY" id="irb-gm-O5S"/>
                                                                         <constraint firstItem="VNQ-pH-0my" firstAttribute="centerY" secondItem="c0e-eg-Fdn" secondAttribute="centerY" id="kMk-J9-rtv"/>
-                                                                        <constraint firstItem="4no-1O-aAS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VNQ-pH-0my" secondAttribute="trailing" constant="8" symbolic="YES" id="rvi-1a-5XJ"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="JF1-rJ-389" secondAttribute="trailing" constant="10" id="sFk-Ve-LoJ"/>
                                                                         <constraint firstItem="VNQ-pH-0my" firstAttribute="leading" secondItem="c0e-eg-Fdn" secondAttribute="leading" constant="10" id="vPo-o8-dI3"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="krh-OB-6Rr" secondAttribute="trailing" constant="10" id="wqP-PA-IBO"/>
-                                                                        <constraint firstItem="4no-1O-aAS" firstAttribute="centerY" secondItem="c0e-eg-Fdn" secondAttribute="centerY" id="zgn-Nu-rfw"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiuss">
@@ -472,7 +474,8 @@
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" name="bg_color"/>
                                                         <connections>
-                                                            <outlet property="deleteButton" destination="krh-OB-6Rr" id="ksK-l1-WtX"/>
+                                                            <outlet property="adImage" destination="6X4-xs-fSv" id="NvG-rW-E3n"/>
+                                                            <outlet property="deleteButton" destination="S0Q-ZF-nwk" id="lmF-BZ-XVx"/>
                                                             <outlet property="vehicleNumber" destination="VNQ-pH-0my" id="OiR-iS-NSl"/>
                                                         </connections>
                                                     </tableViewCell>
@@ -551,7 +554,7 @@
                                         <rect key="frame" x="20" y="60" width="353" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search history" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYY-Li-gvo">
-                                                <rect key="frame" x="125.33333333333334" y="5.3333333333333286" width="102.66666666666666" height="19.333333333333332"/>
+                                                <rect key="frame" x="119" y="5.3333333333333286" width="115.33333333333331" height="19.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -601,12 +604,21 @@
                                                                             <color key="textColor" name="AppColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_ad" translatesAutoresizingMaskIntoConstraints="NO" id="2MS-9L-6Jn">
+                                                                            <rect key="frame" x="313" y="11.666666666666664" width="30" height="30"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="30" id="7Ak-qB-wav"/>
+                                                                                <constraint firstAttribute="width" constant="30" id="trf-iI-X0J"/>
+                                                                            </constraints>
+                                                                        </imageView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstItem="wGo-px-Qck" firstAttribute="leading" secondItem="Q3U-LO-Ci5" secondAttribute="leading" constant="10" id="McZ-6d-zgO"/>
+                                                                        <constraint firstItem="2MS-9L-6Jn" firstAttribute="centerY" secondItem="Q3U-LO-Ci5" secondAttribute="centerY" id="QdG-bp-LT7"/>
                                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wGo-px-Qck" secondAttribute="trailing" constant="20" symbolic="YES" id="V0z-i1-Lax"/>
                                                                         <constraint firstItem="wGo-px-Qck" firstAttribute="centerY" secondItem="Q3U-LO-Ci5" secondAttribute="centerY" id="pc6-kB-TKw"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="2MS-9L-6Jn" secondAttribute="trailing" constant="10" id="wge-b6-FCy"/>
                                                                         <constraint firstAttribute="height" constant="53" id="xol-xY-Ka7"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
@@ -631,6 +643,7 @@
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" name="bg_color"/>
                                                         <connections>
+                                                            <outlet property="adImage" destination="2MS-9L-6Jn" id="uXs-e4-oQK"/>
                                                             <outlet property="vehicleNumber" destination="wGo-px-Qck" id="iWd-ue-sCH"/>
                                                         </connections>
                                                     </tableViewCell>
@@ -687,10 +700,10 @@
     </scenes>
     <resources>
         <image name="ic-clock" width="30" height="30"/>
+        <image name="ic_ad" width="30" height="30"/>
         <image name="ic_back" width="25" height="25"/>
         <image name="ic_bgview" width="320" height="315"/>
-        <image name="ic_delete" width="20" height="20"/>
-        <image name="ic_delete_btn_bg" width="30" height="30.333333969116211"/>
+        <image name="ic_delete_new" width="30" height="30"/>
         <image name="ic_uncheck" width="18" height="18"/>
         <namedColor name="AppColor">
             <color red="0.25499999523162842" green="0.40799999237060547" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

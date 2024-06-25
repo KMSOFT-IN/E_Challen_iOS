@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                            UserdefaultHelper.setBannerId(value: adIDs.iosBannerID)
                            UserdefaultHelper.setIntertitialId(value: adIDs.iosInterstitialID)
                            UserdefaultHelper.setadsEnable(value: true)
+                           UserdefaultHelper.setSearchCount(value: 1)
 
                            print("iOS App ID: \(adIDs.iosAppID)")
                            print("iOS Banner ID: \(adIDs.iosBannerID)")

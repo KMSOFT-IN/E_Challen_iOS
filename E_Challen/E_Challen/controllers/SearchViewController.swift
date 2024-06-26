@@ -20,11 +20,18 @@ class SearchViewController: UIViewController, GADFullScreenContentDelegate {
     var adsEnable:Bool = false
     private var isAdLoaded: Bool = false
     var vehicleNumber: String = ""
+    var isInternetActive:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if UserdefaultHelper.getadsEnable() ?? false {
+        if UserdefaultHelper.getInternet() ?? false {
+            self.isInternetActive = true
+        }else {
+            self.isInternetActive = false
+        }
+        
+        if UserdefaultHelper.getadsEnable() ?? false  && self.isInternetActive {
             self.adsEnable = true
         } else {
             self.adsEnable = false
@@ -42,6 +49,7 @@ class SearchViewController: UIViewController, GADFullScreenContentDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.searchCount = UserdefaultHelper.getSearchCount() ?? 1
+        self.fetchData()
         self.tableView.reloadData()
     }
     
@@ -128,6 +136,12 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
             webViewController.vehicleNumber = vehicle.vehicle_Number
             self.navigationController?.pushViewController(webViewController, animated: true)
         }
+        
+        let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                          vehicle_number: vehicle.vehicle_Number,
+                                          createdAt: Date().timeIntervalSince1970)
+        
+        manager.addHistory(historyVehicle)
     }
     
     func isValidVehicleNumber(_ vehicleNumber: String?) -> Bool {

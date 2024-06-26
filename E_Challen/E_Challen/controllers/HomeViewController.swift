@@ -27,11 +27,18 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     var adsEnable:Bool = false
     var vehicleNumber: String = ""
     var isFromSearchBtn:Bool = false
+    var isInternetActive:Bool = false
   
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        if UserdefaultHelper.getadsEnable() ?? false {
+        if UserdefaultHelper.getInternet() ?? false {
+            self.isInternetActive = true
+        }else {
+            self.isInternetActive = false
+        }
+        
+        if UserdefaultHelper.getadsEnable() ?? false && self.isInternetActive {
             self.adsEnable = true
             self.tableViewBottom.constant = 100
         } else {
@@ -430,6 +437,12 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
             webViewController.vehicleNumber = vehicle.vehicle_Number
             self.navigationController?.pushViewController(webViewController, animated: true)
         }
+        
+        let historyVehicle = HistoryModel(id: UUID().uuidString,
+                                          vehicle_number: vehicle.vehicle_Number,
+                                          createdAt: Date().timeIntervalSince1970)
+        
+        manager.addHistory(historyVehicle)
     }
     
     func isValidVehicleNumber(_ vehicleNumber: String?) -> Bool {

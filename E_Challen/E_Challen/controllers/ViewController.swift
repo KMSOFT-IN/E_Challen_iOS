@@ -19,52 +19,92 @@ class ViewController: UIViewController, WKNavigationDelegate {
     private let monitor = NWPathMonitor()
     
     override func viewDidLoad() {
-          super.viewDidLoad()
-
-          webView = WKWebView(frame: self.view.frame)
-               webView.navigationDelegate = self
-               self.MainView.addSubview(webView)
-
+        super.viewDidLoad()
+        
+        webView = WKWebView(frame: self.view.frame)
+        webView.navigationDelegate = self
+        
+        webView.isHidden = true
+        self.MainView.addSubview(webView)
+        
         loadingIndicator = UIActivityIndicatorView(style: .large)
-                loadingIndicator.center = self.view.center
-                self.view.addSubview(loadingIndicator)
+        loadingIndicator.center = self.view.center
+        loadingIndicator.startAnimating()
+        self.view.addSubview(loadingIndicator)
         
         monitorNetwork()
         
-               // Load the initial page
-//               if let url = URL(string: "https://www.suratcitypolice.org/") {
-//                   let request = URLRequest(url: url)
-//                   webView.load(request)
-//               }
-           }
+        
+    }
     
-    private func monitorNetwork() {
-            monitor.pathUpdateHandler = { path in
-                DispatchQueue.main.async {
-                    if path.status == .satisfied {
-                        self.loadWebPage()
-                        UserdefaultHelper.setInternet(value: <#T##Bool?#>)
-                    } else {
-                        self.loadingIndicator.stopAnimating()
-                        self.showNoInternetConnectionScreen()
-                    }
-                }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView.url?.absoluteString == "https://www.suratcitypolice.org/" && !formSubmitted {
+            guard let vehicleNumber = vehicleNumber else {
+                print("Vehicle number is nil")
+                return
             }
             
-            let queue = DispatchQueue(label: "NetworkMonitor")
-            monitor.start(queue: queue)
+            let js = """
+                                 document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
+                                 document.querySelector('form').submit();
+                                 """
+            webView.evaluateJavaScript(js) { (result, error) in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                } else {
+                    self.formSubmitted = true
+                }
+            }
+        } else if let url = webView.url?.absoluteString {
+            if url.contains("/home/search") {
+                webView.evaluateJavaScript("document.body.innerText") { (result, error) in
+                    if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    guard let bodyText = result as? String else {
+                        return
+                    }
+                    
+                    if bodyText.contains("No records found") {
+                        self.loadingIndicator.stopAnimating()
+                        self.webView.isHidden = false
+                    } else {
+                        self.loadingIndicator.stopAnimating()
+                        self.webView.isHidden = false
+                    }
+                }
+            } else {
+                self.loadingIndicator.stopAnimating()
+                self.webView.isHidden = false
+            }
         }
+    }
     
-    private func loadWebPage() {
-            if let url = URL(string: "https://www.suratcitypolice.org/") {
-                let request = URLRequest(url: url)
-                webView.load(request)
-                loadingIndicator.startAnimating()
+    private func monitorNetwork() {
+        monitor.pathUpdateHandler = { path in
+            DispatchQueue.main.async {
+                if path.status == .satisfied {
+                    UserdefaultHelper.setInternet(value: true)
+                    if let url = URL(string: "https://www.suratcitypolice.org/") {
+                        let request = URLRequest(url: url)
+                        self.webView.load(request)
+                    }
+                } else {
+                    UserdefaultHelper.setInternet(value: false)
+                    self.loadingIndicator.stopAnimating()
+                    self.showNoInternetConnectionScreen()
+                }
             }
         }
         
-        private func showNoInternetConnectionScreen() {
-            let html = """
+        let queue = DispatchQueue(label: "NetworkMonitor")
+        monitor.start(queue: queue)
+    }
+    
+    private func showNoInternetConnectionScreen() {
+        let html = """
             <html>
             <head>
             <title>No Internet Connection</title>
@@ -80,112 +120,187 @@ class ViewController: UIViewController, WKNavigationDelegate {
             </body>
             </html>
             """
-            webView.loadHTMLString(html, baseURL: nil)
-        }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            let vehicleNumber = vehicleNumber ?? ""
-            
-            // JavaScript to set the vehicle number and submit the form
-            let js = """
-            document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
-            document.querySelector('form').submit();
-            """
-            
-            // Execute the JavaScript in the web view
-            webView.evaluateJavaScript(js) { (result, error) in
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                } else {
-                    self.loadingIndicator.stopAnimating()
-                    self.webView.isHidden = false
-                }
-            }
-        }
-
-           // WKNavigationDelegate method to know when the page has finished loading
-//           func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//               let vehicleNumber = vehicleNumber ?? ""
-//
-//               // JavaScript to set the vehicle number and submit the form
-//               let js = """
-//               document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
-//               document.querySelector('form').submit();
-//               """
-//
-//               // Execute the JavaScript in the web view
-//               webView.evaluateJavaScript(js) { (result, error) in
-//                   if let error = error {
-//                       print("Error: \(error.localizedDescription)")
-//                   }
-//               }
-//           }
+        webView.loadHTMLString(html, baseURL: nil)
+    }
     
+    /*
+     override func viewDidLoad() {
+     super.viewDidLoad()
+     
+     webView = WKWebView(frame: self.view.frame)
+     webView.navigationDelegate = self
+     
+     webView.isHidden = true
+     self.MainView.addSubview(webView)
+     
+     //          webView = WKWebView(frame: self.view.frame)
+     //               webView.navigationDelegate = self
+     //               self.MainView.addSubview(webView)
+     
+     loadingIndicator = UIActivityIndicatorView(style: .large)
+     loadingIndicator.center = self.view.center
+     self.view.addSubview(loadingIndicator)
+     
+     monitorNetwork()
+     
+     // Load the initial page
+     //               if let url = URL(string: "https://www.suratcitypolice.org/") {
+     //                   let request = URLRequest(url: url)
+     //                   webView.load(request)
+     //               }
+     }
+     
+     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+     if webView.url?.absoluteString == "https://www.suratcitypolice.org/" && !formSubmitted {
+     guard let vehicleNumber = vehicleNumber else {
+     print("Vehicle number is nil")
+     return
+     }
+     
+     let js = """
+     document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
+     document.querySelector('form').submit();
+     """
+     webView.evaluateJavaScript(js) { (result, error) in
+     if let error = error {
+     print("Error: \(error.localizedDescription)")
+     } else {
+     self.formSubmitted = true
+     }
+     }
+     } else if let url = webView.url?.absoluteString {
+     if url.contains("/home/search") {
+     webView.evaluateJavaScript("document.body.innerText") { (result, error) in
+     if let error = error {
+     print("Error: \(error.localizedDescription)")
+     return
+     }
+     
+     guard let bodyText = result as? String else {
+     return
+     }
+     
+     if bodyText.contains("No records found") {
+     self.loadingIndicator.stopAnimating()
+     self.webView.isHidden = false
+     } else {
+     self.loadingIndicator.stopAnimating()
+     self.webView.isHidden = false
+     }
+     }
+     } else {
+     self.loadingIndicator.stopAnimating()
+     self.webView.isHidden = false
+     }
+     }
+     }*/
+    
+   
+    /*
+     //        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+     //            let vehicleNumber = vehicleNumber ?? ""
+     //
+     //            // JavaScript to set the vehicle number and submit the form
+     //            let js = """
+     //            document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
+     //            document.querySelector('form').submit();
+     //            """
+     //
+     //            // Execute the JavaScript in the web view
+     //            webView.evaluateJavaScript(js) { (result, error) in
+     //                if let error = error {
+     //                    print("Error: \(error.localizedDescription)")
+     //                } else {
+     //                    self.loadingIndicator.stopAnimating()
+     //                    self.webView.isHidden = false
+     //                }
+     //            }
+     //        }
+     
+     // WKNavigationDelegate method to know when the page has finished loading
+     //           func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+     //               let vehicleNumber = vehicleNumber ?? ""
+     //
+     //               // JavaScript to set the vehicle number and submit the form
+     //               let js = """
+     //               document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
+     //               document.querySelector('form').submit();
+     //               """
+     //
+     //               // Execute the JavaScript in the web view
+     //               webView.evaluateJavaScript(js) { (result, error) in
+     //                   if let error = error {
+     //                       print("Error: \(error.localizedDescription)")
+     //                   }
+     //               }
+     //           }
+     */
     //----------------------
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        webView = WKWebView(frame: self.view.frame)
-//        webView.navigationDelegate = self
-//        
-//       // webView.isHidden = true
-//        self.MainView.addSubview(webView)
-//        
-////        loadingIndicator = UIActivityIndicatorView(style: .large)
-////        loadingIndicator.center = self.view.center
-////        loadingIndicator.startAnimating()
-////        self.view.addSubview(loadingIndicator)
-//        
-//        if let url = URL(string: "https://www.suratcitypolice.org/") {
-//            let request = URLRequest(url: url)
-//            webView.load(request)
-//        }
-//    }
+    //    override func viewDidLoad() {
+    //        super.viewDidLoad()
+    //
+    //        webView = WKWebView(frame: self.view.frame)
+    //        webView.navigationDelegate = self
+    //
+    //       // webView.isHidden = true
+    //        self.MainView.addSubview(webView)
+    //
+    ////        loadingIndicator = UIActivityIndicatorView(style: .large)
+    ////        loadingIndicator.center = self.view.center
+    ////        loadingIndicator.startAnimating()
+    ////        self.view.addSubview(loadingIndicator)
+    //
+    //        if let url = URL(string: "https://www.suratcitypolice.org/") {
+    //            let request = URLRequest(url: url)
+    //            webView.load(request)
+    //        }
+    //    }
     
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        if webView.url?.absoluteString == "https://www.suratcitypolice.org/" && !formSubmitted {
-//            guard let vehicleNumber = vehicleNumber else {
-//                print("Vehicle number is nil")
-//                return
-//            }
-//            
-//            let js = """
-//                               document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
-//                               document.querySelector('form').submit();
-//                               """
-//            webView.evaluateJavaScript(js) { (result, error) in
-//                if let error = error {
-//                    print("Error: \(error.localizedDescription)")
-//                } else {
-//                    self.formSubmitted = true
-//                }
-//            }
-//        } else if let url = webView.url?.absoluteString {
-//            if url.contains("/home/search") {
-//                webView.evaluateJavaScript("document.body.innerText") { (result, error) in
-//                    if let error = error {
-//                        print("Error: \(error.localizedDescription)")
-//                        return
-//                    }
-//                    
-//                    guard let bodyText = result as? String else {
-//                        return
-//                    }
-//                    
-//                    if bodyText.contains("No records found") {
-////                        self.loadingIndicator.stopAnimating()
-//                        self.webView.isHidden = false
-//                    } else {
-////                        self.loadingIndicator.stopAnimating()
-//                        self.webView.isHidden = false
-//                    }
-//                }
-//            } else {
-////                self.loadingIndicator.stopAnimating()
-//                self.webView.isHidden = false
-//            }
-//        }
-//    }
+    //    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    //        if webView.url?.absoluteString == "https://www.suratcitypolice.org/" && !formSubmitted {
+    //            loadingIndicator.stopAnimating()
+    //            guard let vehicleNumber = vehicleNumber else {
+    //                print("Vehicle number is nil")
+    //                return
+    //            }
+    //
+    //            let js = """
+    //                               document.querySelector('input[name="vehicleno"]').value = '\(vehicleNumber)';
+    //                               document.querySelector('form').submit();
+    //                               """
+    //            webView.evaluateJavaScript(js) { (result, error) in
+    //                if let error = error {
+    //                    print("Error: \(error.localizedDescription)")
+    //                } else {
+    //                    self.formSubmitted = true
+    //                }
+    //            }
+    //        } else if let url = webView.url?.absoluteString {
+    //            if url.contains("/home/search") {
+    //                webView.evaluateJavaScript("document.body.innerText") { (result, error) in
+    //                    if let error = error {
+    //                        print("Error: \(error.localizedDescription)")
+    //                        return
+    //                    }
+    //
+    //                    guard let bodyText = result as? String else {
+    //                        return
+    //                    }
+    //
+    //                    if bodyText.contains("No records found") {
+    ////                        self.loadingIndicator.stopAnimating()
+    //                        self.webView.isHidden = false
+    //                    } else {
+    ////                        self.loadingIndicator.stopAnimating()
+    //                        self.webView.isHidden = false
+    //                    }
+    //                }
+    //            } else {
+    ////                self.loadingIndicator.stopAnimating()
+    //                self.webView.isHidden = false
+    //            }
+    //        }
+    //    }
     
     // WKNavigationDelegate method to know when the page has finished loading
     //          func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

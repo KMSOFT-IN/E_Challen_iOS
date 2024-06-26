@@ -26,5 +26,12 @@ class Constant{
         static let INTERNET = "internet"
     }
     
+    class NotificationCenterHelper {
+        static let INTERNET_REACH:  Notification.Name = Notification.Name("INTERNET_REACH")
+        static let INTERNET_LOST:  Notification.Name = Notification.Name("INTERNET_LOST")
+      
+    }
+
+    
     var GOOGLEAD_INTERSTITIAL = "ca-app-pub-3940256099942544/4411468910"
 }

@@ -28,10 +28,25 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
     var vehicleNumber: String = ""
     var isFromSearchBtn:Bool = false
     var isInternetActive:Bool = false
-  
+    private var reachability = try! Reachability()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
       
+       // self.checkInternetConnection()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.internetReach),
+                                               name: Constant.NotificationCenterHelper.INTERNET_REACH,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.internetLost),
+                                               name: Constant.NotificationCenterHelper.INTERNET_LOST,
+                                               object: nil)
+        
+        setupReachability()
+          startMonitoringNetwork()
+        
         if UserdefaultHelper.getInternet() ?? false {
             self.isInternetActive = true
         }else {
@@ -46,20 +61,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
             self.tableViewBottom.constant = 20
         }
         
-        if self.adsEnable {
-            
-            bannerView = GADBannerView(adSize: GADAdSizeBanner)
-            addBannerViewToView(bannerView)
-            bannerView.adUnitID = UserdefaultHelper.getBannerId()
-            //        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-            bannerView.rootViewController = self
-            bannerView.load(GADRequest())
-            bannerView.layer.cornerRadius = 8.0
-            bannerView.clipsToBounds = true
-            bannerView.delegate = self
-            
-            self.setInterstitialAD()
-        }
+        self.loadAd()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -87,6 +89,122 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         self.isFromSearchBtn = false
     }
     
+    @objc func internetReach() {
+        UserdefaultHelper.setInternet(value: true)
+        UserdefaultHelper.setSearchCount(value: 1)
+        self.searchCount = 1
+        self.isInternetActive = true
+        if self.bannerView != nil {
+            self.bannerView.isHidden = false
+        }
+        if UserdefaultHelper.getadsEnable() ?? false && self.isInternetActive {
+            self.adsEnable = true
+            self.tableViewBottom.constant = 100
+        } else {
+            self.adsEnable = false
+            self.tableViewBottom.constant = 20
+        }
+        self.loadAd()
+    }
+    
+    @objc func internetLost() {
+        UserdefaultHelper.setInternet(value: false)
+        UserdefaultHelper.setSearchCount(value: 1)
+        self.searchCount = 1
+        self.isInternetActive = false
+        if self.bannerView != nil {
+            self.bannerView.isHidden = true
+        }
+        if UserdefaultHelper.getadsEnable() ?? false && self.isInternetActive {
+            self.adsEnable = true
+            self.tableViewBottom.constant = 100
+        } else {
+            self.adsEnable = false
+            self.tableViewBottom.constant = 20
+        }
+      //  self.loadAd()
+    }
+    
+    func loadAd() {
+        if self.adsEnable {
+            
+            bannerView = GADBannerView(adSize: GADAdSizeBanner)
+            addBannerViewToView(bannerView)
+            bannerView.adUnitID = UserdefaultHelper.getBannerId()
+            //        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView.rootViewController = self
+            bannerView.load(GADRequest())
+            bannerView.layer.cornerRadius = 8.0
+            bannerView.clipsToBounds = true
+            bannerView.delegate = self
+            
+            self.setInterstitialAD()
+        }
+    }
+    
+    private func setupReachability() {
+        do {
+            reachability = try Reachability()
+        } catch {
+            print("Unable to initialize Reachability")
+        }
+    }
+
+    private func startMonitoringNetwork() {
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+            NotificationCenter.default.post(name: Constant.NotificationCenterHelper.INTERNET_REACH, object: nil)
+        }
+
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+            NotificationCenter.default.post(name: Constant.NotificationCenterHelper.INTERNET_LOST, object: nil)
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+    }
+
+    
+//    func checkInternetConnection() {
+//         let reachability: Reachability
+//         do {
+//             reachability = try Reachability()
+//         } catch {
+//             print("Unable to initialize Reachability")
+//             return
+//         }
+//
+//         reachability.whenReachable = { reachability in
+//             if reachability.connection == .wifi {
+//                 print("Reachable via WiFi")
+//             } else {
+//                 print("Reachable via Cellular")
+//             }
+//             NotificationCenter.default.post(name: Constant.NotificationCenterHelper.INTERNET_REACH, object: nil)
+//             print("&&& internet connect")
+//         }
+//
+//         reachability.whenUnreachable = { _ in
+//             print("Not reachable")
+//             NotificationCenter.default.post(name: Constant.NotificationCenterHelper.INTERNET_LOST, object: nil)
+//             print("&&& internet lost")
+//         }
+//
+//         do {
+//             try reachability.startNotifier()
+//         } catch {
+//             print("Unable to start notifier")
+//         }
+//     }
+  
     func addBannerViewToView(_ bannerView: GADBannerView) {
           bannerView.translatesAutoresizingMaskIntoConstraints = false
         bannerView.backgroundColor = .clear

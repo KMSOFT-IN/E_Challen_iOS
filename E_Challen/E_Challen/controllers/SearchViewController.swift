@@ -25,6 +25,15 @@ class SearchViewController: UIViewController, GADFullScreenContentDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.internetReach),
+                                               name: Constant.NotificationCenterHelper.INTERNET_REACH,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.internetLost),
+                                               name: Constant.NotificationCenterHelper.INTERNET_LOST,
+                                               object: nil)
+        
         if UserdefaultHelper.getInternet() ?? false {
             self.isInternetActive = true
         }else {
@@ -55,6 +64,27 @@ class SearchViewController: UIViewController, GADFullScreenContentDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         UserdefaultHelper.setSearchCount(value: self.searchCount)
+    }
+    
+    
+    @objc func internetReach() {
+        UserdefaultHelper.setInternet(value: true)
+        self.isInternetActive = true
+        if UserdefaultHelper.getadsEnable() ?? false && self.isInternetActive {
+            self.adsEnable = true
+        } else {
+            self.adsEnable = false
+        }
+    }
+    
+    @objc func internetLost() {
+        UserdefaultHelper.setInternet(value: false)
+        self.isInternetActive = false
+        if UserdefaultHelper.getadsEnable() ?? false && self.isInternetActive {
+            self.adsEnable = true
+        } else {
+            self.adsEnable = false
+        }
     }
     
     func fetchData() {

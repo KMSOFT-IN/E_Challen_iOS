@@ -36,6 +36,7 @@
 		B259CF2F2C255E3400505333 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = B259CF2B2C255E3400505333 /* OFL.txt */; };
 		B270CD072C269914002A5F60 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B270CD062C269914002A5F60 /* GoogleMobileAds */; };
 		B27831CF2C292D03008245BC /* UserdefaultHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27831CE2C292D03008245BC /* UserdefaultHelper.swift */; };
+		B28FFC782C2BE72D0087C7DF /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28FFC772C2BE72D0087C7DF /* Reachability.swift */; };
 		B29E10C52C256C2E007E7F52 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C42C256C2E007E7F52 /* SplashViewController.swift */; };
 		B29E10C72C256C3F007E7F52 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C62C256C3F007E7F52 /* HomeViewController.swift */; };
 		B29E10C92C256C47007E7F52 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E10C82C256C47007E7F52 /* SearchViewController.swift */; };
@@ -76,6 +77,7 @@
 		B259CF2A2C255E3400505333 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		B259CF2B2C255E3400505333 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		B27831CE2C292D03008245BC /* UserdefaultHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserdefaultHelper.swift; sourceTree = "<group>"; };
+		B28FFC772C2BE72D0087C7DF /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		B29E10C42C256C2E007E7F52 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B29E10C62C256C3F007E7F52 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B29E10C82C256C47007E7F52 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				B27831CE2C292D03008245BC /* UserdefaultHelper.swift */,
 				B29E10D12C257288007E7F52 /* CoreDataManager.swift */,
 				B29E10D32C2572AA007E7F52 /* Model.swift */,
+				B28FFC772C2BE72D0087C7DF /* Reachability.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				B259CF222C255C7000505333 /* TextField.swift in Sources */,
 				B29E10D22C257288007E7F52 /* CoreDataManager.swift in Sources */,
 				B29E10D42C2572AA007E7F52 /* Model.swift in Sources */,
+				B28FFC782C2BE72D0087C7DF /* Reachability.swift in Sources */,
 				B29E10CB2C256C7E007E7F52 /* HomeTableViewCell.swift in Sources */,
 				B29E10D02C256E32007E7F52 /* Constants.swift in Sources */,
 				B259CF232C255C7000505333 /* UIColor.swift in Sources */,

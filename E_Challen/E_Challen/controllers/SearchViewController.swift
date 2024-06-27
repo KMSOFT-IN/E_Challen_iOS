@@ -156,7 +156,10 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
                     self.navigationController?.pushViewController(webViewController, animated: true)
                 }
             } else {
-              //  self.txtVehicle.text = ""
+                print("Ad wasn't ready")
+                let webViewController = ViewController.getInstance()
+                webViewController.vehicleNumber = vehicle.vehicle_Number
+                self.navigationController?.pushViewController(webViewController, animated: true)
             }
         } else {
             self.searchCount += 1

@@ -78,6 +78,13 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
        
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+          if string == " " {
+              return false
+          }
+          return true
+      }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.searchCount = UserdefaultHelper.getSearchCount() ?? 0
         self.setSearchBUttonUI()

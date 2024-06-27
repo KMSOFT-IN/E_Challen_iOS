@@ -14,7 +14,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var data = ["Privacy Policy","Rate us","Share us"]
-    var privacyLink = URL(string: "https://www.termsfeed.com/live/419bed76-acf9-43a3-94b3-0b58cfbe493d")
+    var privacyLink = URL(string: "https://www.termsfeed.com/live/831df050-08e4-4362-82d5-96f4a63acf6e")
     
     override func viewDidLoad() {
         super.viewDidLoad()

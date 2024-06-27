@@ -91,6 +91,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
                         let request = URLRequest(url: url)
                         self.webView.load(request)
                     }
+                } else if path.status == .requiresConnection {
+                    UserdefaultHelper.setInternet(value: true)
+                    if let url = URL(string: "https://www.suratcitypolice.org/") {
+                        let request = URLRequest(url: url)
+                        self.webView.load(request)
+                    }
                 } else {
                     UserdefaultHelper.setInternet(value: false)
                     self.loadingIndicator.stopAnimating()

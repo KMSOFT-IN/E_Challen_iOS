@@ -24,6 +24,7 @@ class Constant{
         static let AD_ENABLE = "isAdsEnable"
         static let SEARCH_COUNT = "search_count"
         static let INTERNET = "internet"
+        static let PRIVACY_POLICY_DONE = "PRIVACY_POLICY_DONE"
     }
     
     class NotificationCenterHelper {

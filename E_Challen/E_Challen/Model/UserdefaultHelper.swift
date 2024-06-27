@@ -62,4 +62,15 @@ class UserdefaultHelper {
     static func getInternet() -> Bool? {
         return UserDefaults.standard.bool(forKey: Constant.UserDefault.INTERNET)
     }
+    
+    static func setPrivacyPolicy(value: Bool?) {
+        UserDefaults.standard.set(value, forKey: Constant.UserDefault.PRIVACY_POLICY_DONE)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getPrivacyPolicy() -> Bool? {
+        return UserDefaults.standard.bool(forKey: Constant.UserDefault.PRIVACY_POLICY_DONE)
+    }
+    
+    
 }

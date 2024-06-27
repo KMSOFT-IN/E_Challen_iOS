@@ -27,6 +27,10 @@ class SplashViewController: UIViewController, UITextViewDelegate {
         textView.isEditable = false
         textView.isSelectable = true
         
+        if navigationController != nil {
+            self.navigationController?.isNavigationBarHidden = true
+        }
+        
         let text = "I understand this is not a government App and I Read data "
         let privacyPolicy = "Privacy Policy & terms and Conditions."
         
@@ -130,6 +134,7 @@ class SplashViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func continueButtontapped(_ sender: Any) {
         let vc = HomeViewController.getInstance()
+        UserdefaultHelper.setPrivacyPolicy(value: true)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

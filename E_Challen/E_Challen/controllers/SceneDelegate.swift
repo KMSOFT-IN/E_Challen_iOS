@@ -54,8 +54,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func navigateToHomeVC() {
         let isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
+        let privacyPolicyDone = UserdefaultHelper.getPrivacyPolicy()
         
-        if isFirstLaunch {
+        
+        if privacyPolicyDone ?? false {
             // Show HomeViewController
             let homeViewController = HomeViewController.getInstance()
             let navigationController = UINavigationController(rootViewController: homeViewController)

@@ -16,7 +16,9 @@ class SearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.adImage.isHidden = true
+        if self.adImage != nil {
+            self.adImage.isHidden = true
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

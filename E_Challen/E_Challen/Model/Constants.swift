@@ -32,6 +32,7 @@ class Constant{
       
     }
 
-    
+    var privacyLink = URL(string: "https://www.termsfeed.com/live/419bed76-acf9-43a3-94b3-0b58cfbe493d")
+    var webViewLink = URL(string: "https://www.suratcitypolice.org/")
     var GOOGLEAD_INTERSTITIAL = "ca-app-pub-3940256099942544/4411468910"
 }

@@ -341,6 +341,11 @@ class HomeViewController: UIViewController, UITextFieldDelegate , GADBannerViewD
         
     }
     
+    @IBAction func settingButtonTapped(_ sender: Any) {
+        let vc = SettingViewController.getInstance()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func searchButtontapped(_ sender: Any) {
         self.isFromSearchBtn = true
         guard let trimmedText = txtVehicle.text?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmedText.isEmpty else {
